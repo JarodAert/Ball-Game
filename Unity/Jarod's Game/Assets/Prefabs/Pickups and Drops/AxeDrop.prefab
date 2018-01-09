@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 23170115549885026}
   - component: {fileID: 65629197910169738}
   - component: {fileID: 114568166104757964}
+  - component: {fileID: 114396390707635468}
   m_Layer: 0
   m_Name: AxeDrop
   m_TagString: AxeDrop
@@ -126,6 +127,29 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.05171887, y: 0.14999999, z: 0.026649445}
   m_Center: {x: -0.0050000134, y: 0.074999996, z: 0.005554986}
+--- !u!114 &114396390707635468
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1885580963927136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9341e06c9fb28114783e3535818f0256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handGunDrop: {fileID: 0}
+  shotgunDrop: {fileID: 0}
+  rifleDrop: {fileID: 0}
+  rocketLauncherDrop: {fileID: 0}
+  SwordDrop: {fileID: 0}
+  AxeDrop: {fileID: 0}
+  terr: {fileID: 0}
+  handGun: 1
+  sword: 0
+  axe: 0
+  xConstrant: 45
+  zConstrant: 45
 --- !u!114 &114568166104757964
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,16 +1,11 @@
 fileFormatVersion: 2
-guid: 1ceb5bdde8c3dd44d902e18ad4188350
-timeCreated: 1515107926
+guid: 9341e06c9fb28114783e3535818f0256
+timeCreated: 1515459787
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - handGunDrop: {fileID: 1522947790684982, guid: 97576b9a33955204faceba3dd3397cc9,
-      type: 2}
-  - shotgunDrop: {instanceID: 0}
-  - rifleDrop: {instanceID: 0}
-  - rocketLauncherDrop: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

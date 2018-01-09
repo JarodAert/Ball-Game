@@ -59,10 +59,11 @@
      <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />
      <Compile Include="Assets\Scripts\ExplosionKiller.cs" />
      <Compile Include="Assets\Scripts\ExplosionPhysicsForce.cs" />
-     <Compile Include="Assets\Scripts\GameController\EnemySpawner.cs" />
-     <Compile Include="Assets\Scripts\GameController\GameController.cs" />
-     <Compile Include="Assets\Scripts\GameController\GameFunctions.cs" />
-     <Compile Include="Assets\Scripts\GameController\TutorialController.cs" />
+     <Compile Include="Assets\Scripts\GameControllers\EnemySpawner.cs" />
+     <Compile Include="Assets\Scripts\GameControllers\GameController.cs" />
+     <Compile Include="Assets\Scripts\GameControllers\GameFunctions.cs" />
+     <Compile Include="Assets\Scripts\GameControllers\TutorialController.cs" />
+     <Compile Include="Assets\Scripts\GameControllers\WeaponDropSpawner.cs" />
      <Compile Include="Assets\Scripts\LazerController.cs" />
      <Compile Include="Assets\Scripts\PerlinNoise.cs" />
      <Compile Include="Assets\Scripts\Pickups and Drops\AmmoPickupController.cs" />
