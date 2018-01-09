@@ -22,8 +22,7 @@ GameObject:
   - component: {fileID: 33733385523297598}
   - component: {fileID: 23364044284837502}
   - component: {fileID: 136634602727380184}
-  - component: {fileID: 114979702004291914}
-  - component: {fileID: 114882615694570680}
+  - component: {fileID: 114777280735860138}
   m_Layer: 0
   m_Name: HandGunDrop
   m_TagString: HandGunDrop
@@ -115,7 +114,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1149832511338434}
   m_Mesh: {fileID: 4300000, guid: 3f96ed9d70286a3409fb4811ec50f85b, type: 3}
---- !u!114 &114882615694570680
+--- !u!114 &114777280735860138
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -123,40 +122,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1149832511338434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9341e06c9fb28114783e3535818f0256, type: 3}
+  m_Script: {fileID: 11500000, guid: 62e54f06a56218b45a11ee0c0ca859f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handGunDrop: {fileID: 0}
-  shotgunDrop: {fileID: 0}
-  rifleDrop: {fileID: 0}
-  rocketLauncherDrop: {fileID: 0}
-  SwordDrop: {fileID: 0}
-  AxeDrop: {fileID: 0}
-  terr: {fileID: 0}
-  handGun: 1
-  sword: 0
-  axe: 0
-  xConstrant: 45
-  zConstrant: 45
---- !u!114 &114979702004291914
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1149832511338434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9f2d107756962444a9bbef2b8d7cbaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HandGunDrop: {fileID: 1149832511338434}
-  RifleDrop: {fileID: 1515343676894646, guid: a2cb2ead2abaa3d408dd15e9cfa9a75f, type: 2}
-  ShotgunDrop: {fileID: 1937083210582542, guid: 5a4c48de0bb4d1c4b90704cb57fa05a6,
-    type: 2}
-  RocketLauncherDrop: {fileID: 1212583698743648, guid: 3a36f1baeaca4304c995ba99e97e1f15,
-    type: 2}
   loadedAmmo: 15
   totalAmmo: 60
+  typeOfDrop: 15
 --- !u!120 &120586771054222170
 LineRenderer:
   m_ObjectHideFlags: 1

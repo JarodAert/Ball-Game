@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponDrop : MonoBehaviour {
+public class WeaponDropController : MonoBehaviour {
 
     private GameObject GameFunctions;
+
     private Text messageText;
 
-    public float loadedAmmo = 30;
-    public float totalAmmo = 120;
+    public float loadedAmmo = 0;
+    public float totalAmmo = 0;
+
     public WeaponType typeOfDrop;
 
     // When existance starts this functions finds the GameFunctions object and the message text UI element
@@ -33,10 +35,9 @@ public class WeaponDrop : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            messageText.text = "Press 'Q' to pick up "+typeOfDrop+".";
+            messageText.text = "Press 'Q' to pick up "+typeOfDrop.ToString()+".";
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                Debug.Log(other.gameObject.GetComponent<PlayerController>().currentWeapon);
                 if (other.gameObject.GetComponent<PlayerController>().currentWeapon != WeaponType.None)
                 {
                     GameFunctions.GetComponent<GameFunctions>().DestroyCurrentCreateDrop(other.gameObject.GetComponent<PlayerController>().currentWeapon, loadedAmmo, totalAmmo, transform);

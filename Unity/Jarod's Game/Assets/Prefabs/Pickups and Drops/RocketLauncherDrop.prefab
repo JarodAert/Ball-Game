@@ -37,8 +37,8 @@ GameObject:
   - component: {fileID: 4301357812811892}
   - component: {fileID: 33438303416392220}
   - component: {fileID: 23820159020273270}
-  - component: {fileID: 114201103066360018}
   - component: {fileID: 65725833514309212}
+  - component: {fileID: 114025638973336868}
   m_Layer: 0
   m_Name: RocketLauncherDrop
   m_TagString: RocketLauncherDrop
@@ -126,7 +126,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.03, y: 0.25, z: 0.06}
   m_Center: {x: -0.015, y: 0.125, z: 0}
---- !u!114 &114201103066360018
+--- !u!114 &114025638973336868
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -134,17 +134,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1212583698743648}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 757745c0128efdc4cbc61d0f06991b69, type: 3}
+  m_Script: {fileID: 11500000, guid: 62e54f06a56218b45a11ee0c0ca859f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HandGunDrop: {fileID: 1149832511338434, guid: 97576b9a33955204faceba3dd3397cc9,
-    type: 2}
-  RifleDrop: {fileID: 1515343676894646, guid: a2cb2ead2abaa3d408dd15e9cfa9a75f, type: 2}
-  ShotgunDrop: {fileID: 1937083210582542, guid: 5a4c48de0bb4d1c4b90704cb57fa05a6,
-    type: 2}
-  RocketLauncherDrop: {fileID: 1212583698743648}
   loadedAmmo: 1
   totalAmmo: 5
+  typeOfDrop: 1
 --- !u!120 &120465360866460440
 LineRenderer:
   m_ObjectHideFlags: 1

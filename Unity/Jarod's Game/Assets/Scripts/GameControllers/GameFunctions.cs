@@ -316,41 +316,14 @@ public class GameFunctions : MonoBehaviour {
         Collider[] colliders = Physics.OverlapSphere(position,0.05f);
         if (colliders.Length>1)
         {
+            
             foreach (Collider collider in colliders)
             {
                 GameObject go = collider.gameObject;
                 if (go.CompareTag(currentWeapon.ToString()+"Drop")) {
-                    if (go.CompareTag("HandGunDrop"))
-                    {
-                        go.GetComponent<HandGunPickupController>().loadedAmmo = loadedAmmo;
-                        go.GetComponent<HandGunPickupController>().totalAmmo = totalAmmo;
-                    }
-                    if (go.CompareTag("RifleDrop"))
-                    {
 
-                        go.GetComponent<RifleDropController>().loadedAmmo = loadedAmmo;
-                        go.GetComponent<RifleDropController>().totalAmmo = totalAmmo;
-                    }
-                    if (go.CompareTag("ShotgunDrop"))
-                    {
-                        go.GetComponent<ShotgunDropController>().loadedAmmo = loadedAmmo;
-                        go.GetComponent<ShotgunDropController>().totalAmmo = totalAmmo;
-                    }
-                    if (go.CompareTag("RocketLauncherDrop"))
-                    {
-                        go.GetComponent<RocketLauncherDropController>().loadedAmmo = loadedAmmo;
-                        go.GetComponent<RocketLauncherDropController>().totalAmmo = totalAmmo;
-                    }
-                    if (go.CompareTag("SwordDrop"))
-                    {
-                        go.GetComponent<SwordPickupController>().loadedAmmo = loadedAmmo;
-                        go.GetComponent<SwordPickupController>().totalAmmo = totalAmmo;
-                    }
-                    if (go.CompareTag("AxeDrop"))
-                    {
-                        go.GetComponent<AxeDropController>().loadedAmmo = loadedAmmo;
-                        go.GetComponent<AxeDropController>().totalAmmo = totalAmmo;
-                    }
+                    go.GetComponent<WeaponDropController>().loadedAmmo = loadedAmmo;
+                    go.GetComponent<WeaponDropController>().totalAmmo = totalAmmo;
                 }
             }
         }
@@ -366,37 +339,8 @@ public class GameFunctions : MonoBehaviour {
     //Function to get the amount of ammmo within the weapon drop when you pick it up based on the type of weapon drop you are grabbing
     public void GetAmmoRefs(GameObject go,ref float loadedAmmo, ref float totalAmmo)
     {
-        if (go.CompareTag("HandGunDrop"))
-        {
-            loadedAmmo=go.GetComponent<HandGunPickupController>().loadedAmmo;
-            totalAmmo=go.GetComponent<HandGunPickupController>().totalAmmo;
-        }
-        if (go.CompareTag("RifleDrop"))
-        {
-            
-            loadedAmmo = go.GetComponent<RifleDropController>().loadedAmmo;
-            totalAmmo = go.GetComponent<RifleDropController>().totalAmmo;
-        }
-        if (go.CompareTag("ShotgunDrop"))
-        {
-            loadedAmmo = go.GetComponent<ShotgunDropController>().loadedAmmo;
-            totalAmmo = go.GetComponent<ShotgunDropController>().totalAmmo;
-        }
-        if (go.CompareTag("RocketLauncherDrop"))
-        {
-            loadedAmmo = go.GetComponent<RocketLauncherDropController>().loadedAmmo;
-            totalAmmo = go.GetComponent<RocketLauncherDropController>().totalAmmo;
-        }
-        if (go.CompareTag("SwordDrop"))
-        {
-            loadedAmmo = go.GetComponent<SwordPickupController>().loadedAmmo;
-            totalAmmo = go.GetComponent<SwordPickupController>().totalAmmo;
-        }
-        if (go.CompareTag("AxeDrop"))
-        {
-            loadedAmmo = go.GetComponent<AxeDropController>().loadedAmmo;
-            totalAmmo = go.GetComponent<AxeDropController>().totalAmmo;
-        }
+        loadedAmmo = go.GetComponent<WeaponDropController>().loadedAmmo;
+        totalAmmo = go.GetComponent<WeaponDropController>().totalAmmo;
     }
 
     //Function that takes in the gameobject for the weapon drop that the player is picking up and the new current weapon type the player just picked up

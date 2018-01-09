@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponDropController : MonoBehaviour {
+public class WeaponDropSpawner : MonoBehaviour {
 
     public GameObject handGunDrop;
     public GameObject shotgunDrop;
