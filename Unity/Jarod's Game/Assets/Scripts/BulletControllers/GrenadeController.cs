@@ -5,7 +5,6 @@ using UnityEngine;
 public class GrenadeController : MonoBehaviour {
 
     private GameObject GameFunctions;
-    private GameObject GameController;
     public GameObject grenadeExplosion;
     public GameObject explosion;
     public float throwSpeed = 3;
@@ -16,8 +15,6 @@ public class GrenadeController : MonoBehaviour {
     {
         explodeTime = Time.time + 3;
         GameFunctions = GameObject.FindGameObjectWithTag("GameFunctions");
-        GameController = GameObject.FindGameObjectWithTag("GameController");
-        GetComponent<Rigidbody>().velocity = GameFunctions.GetComponent<GameFunctions>().FindBulletVelocity(this.gameObject, throwSpeed);
     }
 
     // Update is called once per frame

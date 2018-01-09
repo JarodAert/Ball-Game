@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class BulletMovement : MonoBehaviour {
 
     private GameObject GameFunctions;
-    private GameObject GameController;
     public GameObject explosion;
     public float bulletSpeed = 50;
     public float bulletStrength = 10;
@@ -17,8 +16,6 @@ public class BulletMovement : MonoBehaviour {
     void Start () {
         Destroy(this.gameObject, 1.5f);
         GameFunctions = GameObject.FindGameObjectWithTag("GameFunctions");
-        GameController = GameObject.FindGameObjectWithTag("GameController");
-        GetComponent<Rigidbody>().velocity = GameFunctions.GetComponent<GameFunctions>().FindBulletVelocity(this.gameObject, bulletSpeed);
 	}
 	
 	// Update is called once per frame, not used yet
@@ -35,8 +32,6 @@ public class BulletMovement : MonoBehaviour {
         {
             if (other.GetComponent<EnemyController>().health > 0)
             {
-                Debug.Log(other.gameObject);
-                Debug.Log(GameFunctions.GetComponent<GameFunctions>());
                 GameFunctions.GetComponent<GameFunctions>().DamageObject(other.gameObject, bulletStrength);
             }
             Destroy(this.gameObject);

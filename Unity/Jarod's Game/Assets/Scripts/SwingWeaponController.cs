@@ -5,7 +5,6 @@ using UnityEngine;
 public class SwingWeaponController : MonoBehaviour {
 
     private GameObject GameFunctions;
-    private GameObject GameController;
     public GameObject explosion;
     public float swingSpeed = 1;
     public float swingStrength = 100;
@@ -15,7 +14,6 @@ public class SwingWeaponController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         GameFunctions = GameObject.FindGameObjectWithTag("GameFunctions");
-        GameController = GameObject.FindGameObjectWithTag("GameController");
     }
 	
 	// Update is called once per frame

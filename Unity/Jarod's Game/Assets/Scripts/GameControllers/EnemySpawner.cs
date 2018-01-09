@@ -19,69 +19,95 @@ public class EnemySpawner : MonoBehaviour {
     public float bigEnemyDouble=75;
     public float xConstrant = 45;
     public float zConstrant = 45;
+    public float fastEnemyLowerChance = 25;
+    public float fastEnemyHigherChance = 40;
+    public float bigEnemyLowerChance = 25;
+    public float bigEnemyHigherChance = 40;
+
+    private float normalEnemyChance = 0;
+    private float fastEnemyChance = 0;
+    private float bigEnemyChance = 0;
 
     // Use this for initialization
     void Start () {
         GameController = GameObject.FindGameObjectWithTag("GameController");
     }
-	
-	// Update is called once per frame
+
+    // Update is called once per frame
     //Here a new enemy object is randomly placed on the map every 3 seconds
     //After a set number of kills there is a chance it will spawn fast and big enemies 
-	void Update () {
-        if (Time.time>nextTime && GameController.GetComponent<GameController>().activeEnemies<maxEnemies&&GameController.GetComponent<GameController>().EndGame==false)
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Debug.Log("Normal: " + normalEnemyChance + " fast: " + fastEnemyChance + " big: " + bigEnemyChance);
+        }
+
+        if (Time.time > nextTime && GameController.GetComponent<GameController>().activeEnemies < maxEnemies && GameController.GetComponent<GameController>().EndGame == false)
         {
 
-            Vector3 placement = new Vector3(Random.Range(-xConstrant, xConstrant), 1, Random.Range(-zConstrant, zConstrant));
-            float offset = terr.SampleHeight(placement);
-            placement = new Vector3(placement.x, placement.y + offset, placement.z);
-            Instantiate(enemy, placement, Quaternion.identity);
-            GameController.GetComponent<GameController>().activeEnemies++;
-            nextTime = Time.time + spawnRate;
+            SetChances();
 
-            //Check to see if there are enough kills to start spawning fast enemies
-            if (GameController.GetComponent<GameController>().kills>fastEnemyStart)
+            float randNormal = Random.Range(0, 100);
+            float randFast = Random.Range(0, 100);
+            float randBig = Random.Range(0, 100);
+
+            if (randNormal < normalEnemyChance)
             {
-                float rand = Random.Range(0,100);
-                //Check and see if the chances are high enough to spawn
-                if (rand<25 && GameController.GetComponent<GameController>().kills<fastEnemyDouble)
-                {
-                    placement = new Vector3(Random.Range(-xConstrant, xConstrant), 1, Random.Range(-zConstrant, zConstrant));
-                    offset = terr.SampleHeight(placement);
-                    placement = new Vector3(placement.x, placement.y + offset, placement.z);
-                    Instantiate(fastEnemy, placement, Quaternion.identity);
-                    GameController.GetComponent<GameController>().activeEnemies++;
-                } else if (rand < 40 && GameController.GetComponent<GameController>().kills > fastEnemyDouble)
-                {
-                    placement = new Vector3(Random.Range(-xConstrant, xConstrant), 1, Random.Range(-zConstrant, zConstrant));
-                    offset = terr.SampleHeight(placement);
-                    placement = new Vector3(placement.x, placement.y + offset, placement.z);
-                    Instantiate(fastEnemy, placement, Quaternion.identity);
-                    GameController.GetComponent<GameController>().activeEnemies++;
-                }
+                SpawnEnemy(enemy);
             }
-            //Check to see if there are enough kills to start spawning big enemies
-            if (GameController.GetComponent<GameController>().kills > bigEnemyStart)
+            if (randFast < fastEnemyChance)
             {
-                float rand = Random.Range(0, 100);
-                //Check and see if the chances are high enough to spawn
-                if (rand < 25 && GameController.GetComponent<GameController>().kills < bigEnemyDouble)
-                {
-                    placement = new Vector3(Random.Range(-xConstrant, xConstrant), 1, Random.Range(-zConstrant, zConstrant));
-                    offset = terr.SampleHeight(placement);
-                    placement = new Vector3(placement.x, placement.y + offset, placement.z);
-                    Instantiate(bigEnemy, placement, Quaternion.identity);
-                    GameController.GetComponent<GameController>().activeEnemies++;
-                }
-                else if (rand < 40 && GameController.GetComponent<GameController>().kills > bigEnemyDouble)
-                {
-                    placement = new Vector3(Random.Range(-xConstrant, xConstrant), 1, Random.Range(-zConstrant, zConstrant));
-                    offset = terr.SampleHeight(placement);
-                    placement = new Vector3(placement.x, placement.y + offset, placement.z);
-                    Instantiate(bigEnemy, placement, Quaternion.identity);
-                    GameController.GetComponent<GameController>().activeEnemies++;
-                }
+                SpawnEnemy(fastEnemy);
             }
+            if (randBig < bigEnemyChance)
+            {
+                SpawnEnemy(bigEnemy);
+            }
+
         }
-	}
+    }
+
+    private void SpawnEnemy(GameObject enemy)
+    {
+        Vector3 placement = new Vector3(Random.Range(-xConstrant, xConstrant), 1, Random.Range(-zConstrant, zConstrant));
+        float offset = terr.SampleHeight(placement);
+        placement = new Vector3(placement.x, placement.y + offset, placement.z);
+        Instantiate(enemy, placement, Quaternion.identity);
+        GameController.GetComponent<GameController>().activeEnemies++;
+        nextTime = Time.time + spawnRate;
+    }
+
+    private void SetChances()
+    {
+        float kills = GameController.GetComponent<GameController>().kills;
+
+        if (kills >= fastEnemyStart && kills < fastEnemyDouble)
+        {
+            fastEnemyChance = fastEnemyLowerChance;
+        }
+        else if (kills >= fastEnemyStart && kills > fastEnemyDouble)
+        {
+            fastEnemyChance = fastEnemyHigherChance;
+        }
+
+        if (kills >= bigEnemyStart && kills < bigEnemyDouble)
+        {
+            bigEnemyChance = bigEnemyLowerChance;
+        }
+        else if (kills >= bigEnemyStart && kills > bigEnemyDouble)
+        {
+            bigEnemyChance = bigEnemyLowerChance;
+        }
+        if (kills < fastEnemyStart)
+        {
+            normalEnemyChance = 100;
+            fastEnemyChance = 0;
+            bigEnemyChance = 0;
+        }
+        else
+        {
+            normalEnemyChance = 100 - bigEnemyChance - fastEnemyChance;
+        }
+    }
 }

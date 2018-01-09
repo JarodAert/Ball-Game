@@ -10,7 +10,7 @@ public class AmmoPickupSpawner : MonoBehaviour {
 
     public float grenadeSpawnChance = 50f;
     private float nextTime = 0;
-    public float spawnRate = 5;
+    public float spawnRate = 8;
 
     public float xConstrant = 45;
     public float zConstrant = 45;
@@ -27,7 +27,7 @@ public class AmmoPickupSpawner : MonoBehaviour {
             {
 
             Vector3 placement = new Vector3(Random.Range(-xConstrant, xConstrant), 0.5f, Random.Range(-zConstrant, zConstrant));
-            float offset = terr.SampleHeight(placement);
+                float offset = terr.SampleHeight(placement);
                 placement = new Vector3(placement.x, placement.y + offset, placement.z);
                 Instantiate(ammoPickup, placement, Quaternion.identity);
 
@@ -35,10 +35,10 @@ public class AmmoPickupSpawner : MonoBehaviour {
                 float rand = Random.Range(0, 100);
                 if (rand < grenadeSpawnChance)
                 {
-                placement = placement + new Vector3(Random.Range(0, 10), 0, Random.Range(0, 10));
+                placement = new Vector3(Random.Range(-xConstrant, xConstrant), 0.5f, Random.Range(-zConstrant, zConstrant));
                 offset = terr.SampleHeight(placement);
                 placement = new Vector3(placement.x, placement.y + offset, placement.z);
-                Instantiate(grenadePickup, placement + new Vector3(Random.Range(0, 10),0, Random.Range(0, 10)), Quaternion.identity);
+                Instantiate(grenadePickup, placement, Quaternion.identity);
                 }
                 nextTime = Time.time + spawnRate;
             }

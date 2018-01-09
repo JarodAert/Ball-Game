@@ -23,6 +23,8 @@ public class GameFunctions : MonoBehaviour {
     //GameObjects that may or may not be used in these functions, most should be check and privatized
     public GameObject GameController;
     public GameObject player;
+    public GameObject playerCamera;
+    public GameObject playerLight;
     public GameObject bullet;
     public GameObject bulletLeft;
     public GameObject bulletRight;
@@ -51,16 +53,19 @@ public class GameFunctions : MonoBehaviour {
     private Text messageText;
     private Text ammoText;
 
+    public Terrain terr;
+
     //Various variables that are technically settings in game. Global so they are editable in unity. Most are pretty self explanatory. Call 4023679129 if you need help on figuring out what any of them mean
     //Actually this one needs some explaining: This keeps track of the rotation of the player about the yaxis, because it is easier to use my own book-keeping for this sometimes. I do it better
     //TODO: This variable should be put into the Player Controller file and be taken into functions making it universal
-    public float yRotation=90;
-    public float xRotation = 0;
     public float xRotationBullet;
     public float handGunFireRate = 0.25f;
     public float rifleFireRate = 0.1f;
     public float shotgunFireRate = 1;
     public float rocketLauncherFireRate = 2;
+    public float globalBulletSpeed = 50;
+    public float globalRocketSpeed = 30;
+    public float globalGrenadeSpeed = 10;
 
 
     // Function that runs the first frame that this object, the GameFunctions, exisits, which should be the first frame of the entire game
@@ -113,22 +118,22 @@ public class GameFunctions : MonoBehaviour {
 
     //Function that takes in a Transform and finds its position offset with the Player Object
     //TODO: Make Function take in 2 Transforms and finds the offset between them, this way it will be universal and not reliant on the player
-    public Vector3 FindPositionOffset(Transform objectTransform)
+    public Vector3 FindPositionOffset(Transform objectTransform, Transform parentObjectTransform)
     {
-        return objectTransform.position - player.transform.position;
+        return objectTransform.position - parentObjectTransform.transform.position;
     }
 
     //Function that takes in a Transform and finds the rotational offset with the Player Object
     //TODO: Make Function take in 2 Transforms and finds the offset between them, this way it will be universal and not reliant on the player
-    public Vector3 FindRotationOffset(Transform objectTransform)
+    public Vector3 FindRotationOffset(Transform objectTransform, Transform parentObjectTransform)
     {
-        return objectTransform.eulerAngles - player.transform.eulerAngles;
+        return objectTransform.eulerAngles - parentObjectTransform.transform.eulerAngles;
     }
 
     //Function that takes in the an object and gets input from the user to move that object
     //Takes input from awsd and arrow keys and moves object by applying forces, this makes the ball roll, pretty sweet, Stolen Straight from Roll-A-Ball
     //Also boosts the speed of movement, by increasing the force applied, when the left shift is held down. Like running in most shooters
-    public void PlayerMovement(GameObject player, float movementSpeed)
+    public void PlayerMovement(GameObject player, float movementSpeed, float yRotation)
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
@@ -147,9 +152,15 @@ public class GameFunctions : MonoBehaviour {
         player.GetComponent<Rigidbody>().AddForce(movement * adjustedMovementSpeed);
     }
 
+    public void SetHeightRelativeToTerrian(GameObject workingObject)
+    {
+        float Offest = terr.SampleHeight(workingObject.transform.position);
+        workingObject.transform.position = new Vector3(workingObject.transform.position.x, workingObject.transform.position.y + Offest, workingObject.transform.position.z);
+    }
+
     //Function that takes in an object and then gets input from the mouse to rotate the player with the mouse
     //It adds the mouse input only on the X axis to the rotation of the object, this way there is only movement on the horizontal plane
-    public void SetPlayerRotation(GameObject player, float rotationSpeed)
+    public void SetPlayerRotation(GameObject player, float rotationSpeed, ref float yRotation, ref float xRotation)
     {
         float mouseRotationX = Input.GetAxis("Mouse X");
         float mouseRotationY = Input.GetAxis("Mouse Y");
@@ -169,40 +180,52 @@ public class GameFunctions : MonoBehaviour {
 
     //Function that takes offsets and an object and rotates it with the player and as the player rotates
     //It does this in the same way as the player rotation function but takes into account how the rotation and offsets will affect the objects position in space and adjusts with trig stuff
-    public void SetCircularRotation(Vector3 rotationOffset, Vector3 positionOffset, GameObject workingObject)
+    public void SetCircularRotation(Vector3 rotationOffset, Vector3 positionOffset, GameObject workingObject, GameObject parentObject)
     {
         float mouseRotationX = Input.GetAxis("Mouse X");
 
-        workingObject.transform.eulerAngles += new Vector3(0.0f, mouseRotationX, 0.0f) * player.GetComponent<PlayerController>().rotationSpeed;
+        if (parentObject.CompareTag("Player")) {
+            workingObject.transform.eulerAngles += new Vector3(0.0f, mouseRotationX, 0.0f) * parentObject.GetComponent<PlayerController>().rotationSpeed;
+        }else if (parentObject.CompareTag("Enemy"))
+        {
+            workingObject.transform.eulerAngles += new Vector3(0.0f, mouseRotationX, 0.0f) * parentObject.GetComponent<GunEnemyController>().rotationSpeed;
+        }
 
         float theta = DegreesToRadians(rotationOffset.y - workingObject.transform.eulerAngles.y);
 
         Vector3 adjustedPositionOffset= new Vector3(-positionOffset.z * Mathf.Sin(theta)+ positionOffset.x * Mathf.Cos(theta), positionOffset.y, positionOffset.z * Mathf.Cos(theta)+ positionOffset.x * Mathf.Sin(theta));
 
-        workingObject.transform.position = player.transform.position + adjustedPositionOffset;
+        workingObject.transform.position = parentObject.transform.position + adjustedPositionOffset;
     }
 
-    public void SetCameraAngle(GameObject workingObject)
+    public void RotationToFaceObject(GameObject workingObject, GameObject targetObject, ref float yRotation, ref float xRotation)
+    {
+        float diffZ = workingObject.transform.position.z - targetObject.transform.position.z;
+        float diffX= workingObject.transform.position.x- targetObject.transform.position.x ;
+        yRotation = -RadiansToDegrees(Mathf.Atan(diffX/diffZ));
+    }
+
+    public void SetCameraAngle(GameObject workingObject, float xRotation)
     {
         workingObject.transform.eulerAngles = new Vector3(xRotation+35,workingObject.transform.eulerAngles.y,workingObject.transform.eulerAngles.z);
     }
 
     //Function that takes in the current weapon the player has and checks to make sure its within the fire rate restrction
     //It then checks for different inputs depending on the type of weapon and calls the fireBullet funciton to shoot if conditions are met
-    public void CheckFireBulletAndAct(WeaponType currentWeapon, ref float loadedAmmo, ref float nextFire)
+    public void CheckFireBulletAndAct(WeaponType currentWeapon, ref float loadedAmmo, ref float nextFire, GameObject weaponHandSpot, float yRotation, float xRotation)
     {
         if (Time.time>nextFire) {
             if (Input.GetKey(KeyCode.Mouse0)&&currentWeapon==WeaponType.Rifle)
             {
                 loadedAmmo--;
                 UpdateAmmoText();
-                FireBullet(currentWeapon, ref nextFire);
+                FireBullet(currentWeapon, ref nextFire, weaponHandSpot, yRotation, xRotation);
             }
             if (Input.GetKeyDown(KeyCode.Mouse0)&&currentWeapon!=WeaponType.Rifle)
             {
                 loadedAmmo--;
                 UpdateAmmoText();
-                FireBullet(currentWeapon, ref nextFire);
+                FireBullet(currentWeapon, ref nextFire, weaponHandSpot, yRotation, xRotation);
             }
         }
     }
@@ -211,53 +234,54 @@ public class GameFunctions : MonoBehaviour {
     //It finds the position that it needs to shoot the bullet from by looking at various bullet spawn point objects and their transformations
     //If weapon is shotgun it calls another function to handle how shotguns shoot
     //TODO: This function needs to be universalized so it can be used with enemy weapons. The Bullet spawn point is the main issue. It is kindof broken and needs to be fixed
-    public void FireBullet(WeaponType type, ref float nextFire)
+    public void FireBullet(WeaponType type, ref float nextFire, GameObject weaponHandSpot, float yRotation, float xRotation)
     {
         if (type==WeaponType.HandGun)
         {
             nextFire = Time.time + handGunFireRate;
-            bulletSpawnPoint = GameObject.FindGameObjectWithTag("BulletSpawnPointHandGun");
-            Instantiate(bullet, weaponHandSpot.transform.position, bulletSpawnPoint.transform.rotation);
+            CreateBullet(bullet, weaponHandSpot, yRotation, xRotation, globalBulletSpeed);
             Instantiate(bulletSound, weaponHandSpot.transform.position, weaponHandSpot.transform.rotation);
         } else if (type==WeaponType.Rifle)
         {
             nextFire = Time.time + rifleFireRate;
-            bulletSpawnPoint = GameObject.FindGameObjectWithTag("BulletSpawnPointRifle");
-            Instantiate(bullet, weaponHandSpot.transform.position, bulletSpawnPoint.transform.rotation);
+            CreateBullet(bullet, weaponHandSpot, yRotation, xRotation, globalBulletSpeed);
             Instantiate(bulletSound, weaponHandSpot.transform.position, weaponHandSpot.transform.rotation);
         }
         else if (type == WeaponType.Shotgun)
         {
             nextFire = Time.time + shotgunFireRate;
-            bulletSpawnPoint = GameObject.FindGameObjectWithTag("BulletSpawnPointShotgun");
-            ShotgunShot(weaponHandSpot.transform.position, Quaternion.identity);
-            ShotgunShot(weaponHandSpot.transform.position, bulletSpawnPoint.transform.rotation);
+            ShotgunShot(weaponHandSpot, Quaternion.identity, yRotation, xRotation);
+            ShotgunShot(weaponHandSpot, Quaternion.identity, yRotation, xRotation);
         }else if (type == WeaponType.RocketLauncher)
         {
             nextFire = Time.time + rocketLauncherFireRate;
-            bulletSpawnPoint = GameObject.FindGameObjectWithTag("BulletSpawnPointRocketLauncher");
-            Instantiate(rocket, weaponHandSpot.transform.position, bulletSpawnPoint.transform.rotation);
+            CreateBullet(rocket, weaponHandSpot, yRotation, xRotation, globalRocketSpeed);
         }
     }
 
     //Function that takes in the position of a bullet spawn point and fires 3 different bullets that will go in slightly different directions like shot gun blasts would
-    public void ShotgunShot(Vector3 position, Quaternion rotation)
+    public void ShotgunShot(GameObject weaponHandSpot, Quaternion rotation, float yRotation, float xRotation)
     {
-        Instantiate(bullet,position, rotation);
-        Instantiate(bulletSound, weaponHandSpot.transform.position, weaponHandSpot.transform.rotation);
-        Instantiate(bulletLeft, position, rotation);
-        Instantiate(bulletSound, weaponHandSpot.transform.position, weaponHandSpot.transform.rotation);
-        Instantiate(bulletRight, position, rotation);
-        Instantiate(bulletSound, weaponHandSpot.transform.position, weaponHandSpot.transform.rotation);
+
+        CreateBullet(bullet, weaponHandSpot, yRotation, xRotation, globalBulletSpeed);
+        CreateBullet(bulletLeft, weaponHandSpot, yRotation, xRotation, globalBulletSpeed);
+        CreateBullet(bulletRight, weaponHandSpot, yRotation, xRotation, globalBulletSpeed);
+        Instantiate(bulletSound, weaponHandSpot.transform);
+    }
+
+    private void CreateBullet(GameObject bullet, GameObject weaponHandSpot, float yRotation, float xRotation, float bulletSpeed)
+    {
+        GameObject firedBullet = Instantiate(bullet, weaponHandSpot.transform.position, weaponHandSpot.transform.rotation);
+
+        FindBulletVelocity(firedBullet, bulletSpeed, yRotation, xRotation);
     }
 
     //This function takes in a bullet game object and assigns it a velocity vector3 based on the type of bullet.
     //Normal bullets will go straight in the direction the gun is facing
     //Left bullets will go slightly left in trajectory
     //Right Bullets will go slightly right in trajectory
-    public Vector3 FindBulletVelocity(GameObject bullet, float bulletSpeed)
+    public void FindBulletVelocity(GameObject bullet, float bulletSpeed, float yRotation, float xRotation)
     {
-  
         float theta = DegreesToRadians(yRotation);
         float theta2 = DegreesToRadians(xRotation);
 
@@ -269,7 +293,10 @@ public class GameFunctions : MonoBehaviour {
         {
              theta = DegreesToRadians(yRotation- Random.Range(0.5f, 2.5f));
         }
-        return new Vector3(bulletSpeed*Mathf.Cos(theta),bulletSpeed*Mathf.Sin(-theta2),bulletSpeed*Mathf.Sin(theta));
+
+        Vector3 speed=new Vector3(bulletSpeed * Mathf.Cos(theta), bulletSpeed * Mathf.Sin(-theta2), bulletSpeed * Mathf.Sin(theta));
+
+        bullet.GetComponent<Rigidbody>().velocity = speed;
     }
 
     //Function that takes in the current weapon the player has, the positon of the weaponDrop they are picking up, and game objects for all the different weapons
@@ -350,6 +377,8 @@ public class GameFunctions : MonoBehaviour {
 
         if (currentWeapon==WeaponType.HandGun)
         {
+            Debug.unityLogger.Log("Made Handgun at : " + weaponHandSpot.transform.position, oldDrop);
+            Debug.Log("Player : " +player.transform.position);
             Instantiate(HandGun,weaponHandSpot.transform);
         }
         if (currentWeapon==WeaponType.Rifle)
@@ -442,9 +471,9 @@ public class GameFunctions : MonoBehaviour {
         Destroy(grenade);
     }
 
-    public void ThrowGrenade()
+    public void ThrowGrenade(GameObject weaponHandSpot, float yRotation, float xRotation)
     {
-        Instantiate(grenade, weaponHandSpot.transform.position, Quaternion.identity);
+        CreateBullet(grenade, weaponHandSpot, yRotation, xRotation, globalGrenadeSpeed);
     }
 
     public void SwingWeapon(GameObject swingWeapon, float swingSpeed)
@@ -456,5 +485,9 @@ public class GameFunctions : MonoBehaviour {
     public float DegreesToRadians(float val)
     {
         return (Mathf.PI / 180) * val;
+    }
+    public float RadiansToDegrees(float val)
+    {
+        return (180/Mathf.PI) * val;
     }
 }

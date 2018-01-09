@@ -8,8 +8,8 @@ public class PlayerCameraController : MonoBehaviour {
     private GameObject GameFunctions;
     private GameObject GameController;
 
-    private Vector3 positionOffset;
-    private Vector3 rotationOffset;
+    public Vector3 positionOffset;
+    public Vector3 rotationOffset;
 
 
 
@@ -17,9 +17,7 @@ public class PlayerCameraController : MonoBehaviour {
     void Start () {
         GameFunctions = GameObject.FindGameObjectWithTag("GameFunctions");
         GameController = GameObject.FindGameObjectWithTag("GameController");
-        positionOffset = GameFunctions.GetComponent<GameFunctions>().FindPositionOffset(transform);
-        rotationOffset = GameFunctions.GetComponent<GameFunctions>().FindRotationOffset(transform);
-        Debug.Log(positionOffset+"\n"+rotationOffset);
+
     }
 
     // Update is called once per frame
@@ -27,8 +25,8 @@ public class PlayerCameraController : MonoBehaviour {
     void Update () {
         if (GameController.GetComponent<GameController>().EndGame != true)
         {
-            GameFunctions.GetComponent<GameFunctions>().SetCircularRotation(rotationOffset, positionOffset, this.gameObject);
-            GameFunctions.GetComponent<GameFunctions>().SetCameraAngle(this.gameObject);
+            GameFunctions.GetComponent<GameFunctions>().SetCircularRotation(rotationOffset, positionOffset, this.gameObject, GameFunctions.GetComponent<GameFunctions>().player);
+            GameFunctions.GetComponent<GameFunctions>().SetCameraAngle(this.gameObject, GameFunctions.GetComponent<GameFunctions>().player.GetComponent<PlayerController>().xRotation);
         }
     }
 

@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 100010, guid: 031d08f52af1daa4f929b85221519426, type: 2}
-  health: 35
+  health: 30
   attackStrength: 2
 --- !u!114 &114815965129587174
 MonoBehaviour:

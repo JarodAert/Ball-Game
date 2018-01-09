@@ -10,12 +10,11 @@ namespace UnityStandardAssets.Effects
         public float explosionForce = 1;
         public float explosionDamage = 20;
         private GameObject GameFunctions;
-        private GameObject GameController;
+
 
         private IEnumerator Start()
         {
             GameFunctions = GameObject.FindGameObjectWithTag("GameFunctions");
-            GameController = GameObject.FindGameObjectWithTag("GameController");
             // wait one frame because some explosions instantiate debris which should then
             // be pushed by physics force
             yield return null;

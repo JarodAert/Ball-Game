@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 
 public class GameController : MonoBehaviour {
@@ -14,6 +13,7 @@ public class GameController : MonoBehaviour {
     private Text healthText;
     private Text killsText;
     public GameObject player;
+    public GameObject playerWeaponHand;
     public GameObject GameFunctions;
     public GameObject OakTree;
     public GameObject FirTree;
@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour {
     public int NumberOfTrees = 10;
     public float treeXConstrant = 35;
     public float treeZConstrant = 35;
+    public float xPlayerConstrant = 50;
+    public float zPlayerConstrant = 50;
 
 	// Runs when it first exists. Find the Text UI elements and then sets them to their starting valuess
 	void Start () {
@@ -41,11 +43,6 @@ public class GameController : MonoBehaviour {
 
         PlaceTrees();
 
-        if (terr != null)
-        {
-            float playerOffest = terr.SampleHeight(player.transform.position);
-            player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + playerOffest, player.transform.position.z);
-        }
     }
 	
 	// Update is called once per frame
@@ -57,13 +54,13 @@ public class GameController : MonoBehaviour {
             messageText.text = "Game Over! Press 'R' to restart. Press 'X' to return to the menu.";
             if (Input.GetKeyDown(KeyCode.R))
             {
-                SceneManager.LoadScene("TestScene");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().ToString());
             }
             if (Input.GetKeyDown(KeyCode.X))
             {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                SceneManager.LoadScene("StartScene");
+                SceneManager.LoadScene("StartMenu");
             }
         }
         else
@@ -71,7 +68,7 @@ public class GameController : MonoBehaviour {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
         {
             if (Time.timeScale==1) {
                 Time.timeScale = 0;
@@ -89,7 +86,7 @@ public class GameController : MonoBehaviour {
             {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                SceneManager.LoadScene("StartScene");
+                SceneManager.LoadScene("StartMenu");
             }
         }
 	}

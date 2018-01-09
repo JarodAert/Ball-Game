@@ -5,14 +5,12 @@ using UnityEngine.UI;
 
 public class GrenadePickupController : MonoBehaviour {
 
-    private Text messageText;
     private GameObject GameFunctions;
 
 
     // Use this for initialization
     void Start()
     {
-        messageText = GameObject.Find("Canvas/MessageText").GetComponent<Text>();
         GameFunctions = GameObject.FindGameObjectWithTag("GameFunctions");
     }
 

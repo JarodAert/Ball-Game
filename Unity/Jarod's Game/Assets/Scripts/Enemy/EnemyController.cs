@@ -8,7 +8,6 @@ public class EnemyController : MonoBehaviour {
     private GameObject GameFunctions;
     private GameObject GameController;
     public GameObject explosion;
-    private Text healthText;
     private Text killsText;
 
     public float health = 100;
@@ -19,7 +18,6 @@ public class EnemyController : MonoBehaviour {
 
     // At dtart of enemy's existance finds the Game functions object and the healthText UI object
     void Start () {
-        healthText = GameObject.Find("Canvas/HealthText").GetComponent<Text>();
         killsText = GameObject.Find("Canvas/NumberOfKillsText").GetComponent<Text>();
         GameFunctions = GameObject.FindGameObjectWithTag("GameFunctions");
         GameController = GameObject.FindGameObjectWithTag("GameController");

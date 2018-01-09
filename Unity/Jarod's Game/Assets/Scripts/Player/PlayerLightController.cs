@@ -8,8 +8,8 @@ public class PlayerLightController : MonoBehaviour {
     private GameObject GameController;
     public float playerLightIntensity = 1.5f;
 
-    private Vector3 positionOffset;
-    private Vector3 rotationOffset;
+    public Vector3 positionOffset;
+    public Vector3 rotationOffset;
     private bool lightOn;
 
 
@@ -19,8 +19,6 @@ public class PlayerLightController : MonoBehaviour {
         GameFunctions = GameObject.FindGameObjectWithTag("GameFunctions");
         GameController = GameObject.FindGameObjectWithTag("GameController");
         lightOn = false;
-        positionOffset = GameFunctions.GetComponent<GameFunctions>().FindPositionOffset(transform);
-        rotationOffset = GameFunctions.GetComponent<GameFunctions>().FindRotationOffset(transform);
         
     }
 	
@@ -29,7 +27,7 @@ public class PlayerLightController : MonoBehaviour {
 	void Update () {
 
         if (GameController.GetComponent<GameController>().EndGame != true) {
-            GameFunctions.GetComponent<GameFunctions>().SetCircularRotation(rotationOffset, positionOffset, this.gameObject);
+            GameFunctions.GetComponent<GameFunctions>().SetCircularRotation(rotationOffset, positionOffset, this.gameObject, GameFunctions.GetComponent<GameFunctions>().player);
             GameFunctions.GetComponent<GameFunctions>().CheckLightOnOff(this.gameObject, ref lightOn, playerLightIntensity);
         }
       

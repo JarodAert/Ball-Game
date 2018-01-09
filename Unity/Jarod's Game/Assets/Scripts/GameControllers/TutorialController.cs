@@ -84,7 +84,7 @@ public class TutorialController : MonoBehaviour {
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            SceneManager.LoadScene("StartScene");
+            SceneManager.LoadScene("StartMenu");
         }
         if (GameObject.FindGameObjectWithTag("HandGunDrop") == null && GameObject.FindGameObjectWithTag("Checkpoint") == null)
         {

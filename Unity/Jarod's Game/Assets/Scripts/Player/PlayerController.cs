@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour {
     public float movementSpeed=8;
     public float rotationSpeed = 5;
 
+    public float yRotation = 90;
+    public float xRotation = 0;
+
 
     public WeaponType currentWeapon;
 
@@ -43,17 +46,18 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
         LaserOnOff();
-        GameFunctions.GetComponent<GameFunctions>().SetPlayerRotation(this.gameObject, rotationSpeed);
+        GameFunctions.GetComponent<GameFunctions>().SetPlayerRotation(this.gameObject, rotationSpeed, ref yRotation,ref xRotation);
         CheckWeaponStuff();
         CheckDeath();
         CheckThrowGrenade();
+        CheckConstrants();
     }
 
     //Called each frame before physics stuff is calculated
     //Checks for base movement and checks if the player wants to freeze their movement or jump
     void FixedUpdate()
     {
-        GameFunctions.GetComponent<GameFunctions>().PlayerMovement(this.gameObject, movementSpeed);
+        GameFunctions.GetComponent<GameFunctions>().PlayerMovement(this.gameObject, movementSpeed, yRotation);
 
         if (Input.GetKey(KeyCode.E))
         {
@@ -95,7 +99,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (loadedAmmo != 0)
         {
-            GameFunctions.GetComponent<GameFunctions>().CheckFireBulletAndAct(currentWeapon, ref loadedAmmo, ref nextFire);
+            GameFunctions.GetComponent<GameFunctions>().CheckFireBulletAndAct(currentWeapon, ref loadedAmmo, ref nextFire, GameFunctions.GetComponent<GameFunctions>().weaponHandSpot, yRotation,xRotation);
         }
         else
         {
@@ -144,9 +148,33 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.G) && totalGrenades>0)
         {
-            GameFunctions.GetComponent<GameFunctions>().ThrowGrenade();
+            GameFunctions.GetComponent<GameFunctions>().ThrowGrenade(GameFunctions.GetComponent<GameFunctions>().weaponHandSpot,yRotation,xRotation);
             totalGrenades--;
             GameFunctions.GetComponent<GameFunctions>().UpdateAmmoText();
+        }
+    }
+    
+    private void CheckConstrants()
+    {
+        if (transform.position.x>GameController.GetComponent<GameController>().xPlayerConstrant)
+        {
+            transform.position = new Vector3(GameController.GetComponent<GameController>().xPlayerConstrant, transform.position.y,transform.position.z);
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+        if (transform.position.x < -GameController.GetComponent<GameController>().xPlayerConstrant)
+        {
+            transform.position = new Vector3(-GameController.GetComponent<GameController>().xPlayerConstrant, transform.position.y, transform.position.z);
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+        if (transform.position.z > GameController.GetComponent<GameController>().zPlayerConstrant)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y,GameController.GetComponent<GameController>().zPlayerConstrant);
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+        if (transform.position.z < -GameController.GetComponent<GameController>().zPlayerConstrant)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, -GameController.GetComponent<GameController>().zPlayerConstrant);
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     }
 }
