@@ -33,6 +33,8 @@ TagManager:
   - Sword
   - Axe
   - AxeDrop
+  - GunEnemy
+  - PlayerTrigger
   layers:
   - Default
   - TransparentFX

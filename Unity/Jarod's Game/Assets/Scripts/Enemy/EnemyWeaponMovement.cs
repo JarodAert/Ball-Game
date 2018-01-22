@@ -10,7 +10,8 @@ public class EnemyWeaponMovement : MonoBehaviour {
     private Vector3 positionOffset;
     private Vector3 rotationOffset;
 
-    private int waiter = 0;
+    public float nextFire=0;
+    public float fireRate=0.5f;
 
     // Runs First frame this object is active. Finds the GameFunctions object and finds the offsets from the player
     void Start()
@@ -30,7 +31,9 @@ public class EnemyWeaponMovement : MonoBehaviour {
         if (GameController.GetComponent<GameController>().EndGame != true)
         {
             GameFunctions.GetComponent<GameFunctions>().SetCircularRotation(rotationOffset, positionOffset, this.gameObject, transform.parent.GetChild(0).gameObject);
-            transform.eulerAngles = new Vector3(transform.parent.GetChild(0).GetChild(1).GetComponent<GunEnemyController>().xRotation, 90 - transform.parent.GetChild(0).GetChild(1).GetComponent<GunEnemyController>().yRotation, 0);
+            transform.eulerAngles = new Vector3(transform.parent.GetChild(0).GetChild(1).GetComponent<GunEnemyController>().xRotation, transform.parent.GetChild(0).GetChild(1).GetComponent<GunEnemyController>().yRotation, 0);
+
+            GameFunctions.GetComponent<GameFunctions>().checkRange(this.gameObject, GameFunctions.GetComponent<GameFunctions>().player, ref nextFire, fireRate, -transform.parent.GetChild(0).GetChild(1).GetComponent<GunEnemyController>().yRotation+90, transform.parent.GetChild(0).GetChild(1).GetComponent<GunEnemyController>().xRotation);
         }
 
     }

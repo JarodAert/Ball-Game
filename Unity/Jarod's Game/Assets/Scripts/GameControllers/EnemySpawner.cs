@@ -8,6 +8,7 @@ public class EnemySpawner : MonoBehaviour {
     public GameObject enemy;
     public GameObject bigEnemy;
     public GameObject fastEnemy;
+    public GameObject gunEnemy;
     public Terrain terr;
 
     private float nextTime=0;
@@ -17,16 +18,19 @@ public class EnemySpawner : MonoBehaviour {
     public float fastEnemyDouble=50;
     public float bigEnemyStart=40;
     public float bigEnemyDouble=75;
+    public float gunEnemyStart = 90;
     public float xConstrant = 45;
     public float zConstrant = 45;
     public float fastEnemyLowerChance = 25;
     public float fastEnemyHigherChance = 40;
     public float bigEnemyLowerChance = 25;
     public float bigEnemyHigherChance = 40;
+    public float gunEnemyLowerChange = 10;
 
     private float normalEnemyChance = 0;
     private float fastEnemyChance = 0;
     private float bigEnemyChance = 0;
+    private float gunEnemyChance = 0;
 
     // Use this for initialization
     void Start () {
@@ -51,6 +55,7 @@ public class EnemySpawner : MonoBehaviour {
             float randNormal = Random.Range(0, 100);
             float randFast = Random.Range(0, 100);
             float randBig = Random.Range(0, 100);
+            float randGun = Random.Range(0, 100);
 
             if (randNormal < normalEnemyChance)
             {
@@ -63,6 +68,10 @@ public class EnemySpawner : MonoBehaviour {
             if (randBig < bigEnemyChance)
             {
                 SpawnEnemy(bigEnemy);
+            }
+            if (randGun < gunEnemyChance)
+            {
+                SpawnEnemy(gunEnemy);
             }
 
         }
@@ -99,6 +108,12 @@ public class EnemySpawner : MonoBehaviour {
         {
             bigEnemyChance = bigEnemyLowerChance;
         }
+
+        if (kills >= gunEnemyStart)
+        {
+            gunEnemyChance = bigEnemyLowerChance;
+        }
+   
         if (kills < fastEnemyStart)
         {
             normalEnemyChance = 100;
@@ -107,7 +122,7 @@ public class EnemySpawner : MonoBehaviour {
         }
         else
         {
-            normalEnemyChance = 100 - bigEnemyChance - fastEnemyChance;
+            normalEnemyChance = 100 - bigEnemyChance - fastEnemyChance-gunEnemyChance;
         }
     }
 }

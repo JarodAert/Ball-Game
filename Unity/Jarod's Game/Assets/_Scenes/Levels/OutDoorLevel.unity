@@ -113,6 +113,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &127486638 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1128102630522066, guid: 9318dc414a43b6349b624e4950a05c8f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1423396823}
 --- !u!1001 &422948639
 Prefab:
   m_ObjectHideFlags: 0
@@ -180,17 +185,17 @@ Prefab:
     - target: {fileID: 114595084066203412, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: treeXConstrant
-      value: 200
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 114595084066203412, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: treeZConstrant
-      value: 200
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 114595084066203412, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: NumberOfTrees
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 114398654290906056, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
@@ -215,58 +220,63 @@ Prefab:
     - target: {fileID: 114398654290906056, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: xConstrant
-      value: 135
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 114398654290906056, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: zConstrant
-      value: 135
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 114530335041838894, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: xConstrant
-      value: 135
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 114530335041838894, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: zConstrant
-      value: 135
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 114490527021326056, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: xConstrant
-      value: 135
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 114490527021326056, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: zConstrant
-      value: 135
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 114595084066203412, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: xPlayerConstrant
-      value: 150
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 114595084066203412, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: zPlayerConstrant
-      value: 150
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 114398654290906056, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: grenadeSpawnChance
-      value: 100
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 114398654290906056, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: spawnRate
-      value: 15
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 114595084066203412, guid: 0891c52e3912abd48a502f15dd25583f,
         type: 2}
       propertyPath: playerWeaponHand
       value: 
       objectReference: {fileID: 1963764887}
+    - target: {fileID: 114490527021326056, guid: 0891c52e3912abd48a502f15dd25583f,
+        type: 2}
+      propertyPath: maxEnemies
+      value: 300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0891c52e3912abd48a502f15dd25583f, type: 2}
   m_IsPrefabParent: 0
@@ -772,6 +782,11 @@ Prefab:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 556158925}
+    - target: {fileID: 114289258494090888, guid: c1c529b7ed7baf0439da50385cf8a36b,
+        type: 2}
+      propertyPath: playerLight
+      value: 
+      objectReference: {fileID: 127486638}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c1c529b7ed7baf0439da50385cf8a36b, type: 2}
   m_IsPrefabParent: 0

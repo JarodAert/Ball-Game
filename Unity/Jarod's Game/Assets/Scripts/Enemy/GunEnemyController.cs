@@ -9,6 +9,8 @@ public class GunEnemyController : MonoBehaviour {
     private GameObject GameController;
     public GameObject explosion;
     private Text killsText;
+    public Texture hitTexture;
+    public Texture normalTexture;
 
     public float health = 100;
 
@@ -19,6 +21,9 @@ public class GunEnemyController : MonoBehaviour {
     public float yRotation = 0;
     public float xRotation = 0;
     public float rotationSpeed = 5;
+
+    public bool hit = false;
+    public float changeTextureBack = 10000;
 
     // At dtart of enemy's existance finds the Game functions object and the healthText UI object
     void Start()
@@ -34,14 +39,29 @@ public class GunEnemyController : MonoBehaviour {
 
         if (health <= 0)
         {
-            GameFunctions.GetComponent<GameFunctions>().DestroyBall(this.transform.parent.gameObject, explosion);
+            GameFunctions.GetComponent<GameFunctions>().DestroyBall(transform.parent.gameObject, explosion);
+            Destroy(transform.parent.parent.gameObject);
             GameController.GetComponent<GameController>().kills++;
             GameController.GetComponent<GameController>().activeEnemies--;
             killsText.text = "Kills: " + GameController.GetComponent<GameController>().kills;
         }
 
-        GameFunctions.GetComponent<GameFunctions>().RotationToFaceObject(this.gameObject, GameFunctions.GetComponent<GameFunctions>().player,ref yRotation,ref xRotation);
-        Debug.Log(yRotation);
+        if (GameController.GetComponent<GameController>().EndGame==false) {
+            GameFunctions.GetComponent<GameFunctions>().RotationToFaceObject(this.gameObject, GameFunctions.GetComponent<GameFunctions>().player, ref yRotation, ref xRotation);
+        }
+        //Debug.Log(yRotation);
+
+        if (hit == true)
+        {
+            GameFunctions.GetComponent<GameFunctions>().changeMaterial(this.transform.parent.gameObject, hitTexture);
+            changeTextureBack = Time.time + 0.2f;
+            hit = false;
+        }
+        if (Time.time > changeTextureBack)
+        {
+            GameFunctions.GetComponent<GameFunctions>().changeMaterial(this.transform.parent.gameObject, normalTexture);
+            changeTextureBack = Time.time + 10000;
+        }
 
     }
 

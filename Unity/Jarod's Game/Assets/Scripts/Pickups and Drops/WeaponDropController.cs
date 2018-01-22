@@ -33,13 +33,14 @@ public class WeaponDropController : MonoBehaviour {
     //IF they player presses Q it swaps the pickup and the pllayers current weapon
     void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             messageText.text = "Press 'Q' to pick up "+typeOfDrop.ToString()+".";
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 if (other.gameObject.GetComponent<PlayerController>().currentWeapon != WeaponType.None)
                 {
+                    Debug.Log("Greating new Drop!!!!");
                     GameFunctions.GetComponent<GameFunctions>().DestroyCurrentCreateDrop(other.gameObject.GetComponent<PlayerController>().currentWeapon, loadedAmmo, totalAmmo, transform);
                 }
                 other.gameObject.GetComponent<PlayerController>().currentWeapon = typeOfDrop;

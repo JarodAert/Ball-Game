@@ -13,6 +13,7 @@ public class LazerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        
         transform.eulerAngles = new Vector3(GameFunctions.GetComponent<GameFunctions>().player.GetComponent<PlayerController>().xRotation, 90-GameFunctions.GetComponent<GameFunctions>().player.GetComponent<PlayerController>().yRotation,0);
     }
 

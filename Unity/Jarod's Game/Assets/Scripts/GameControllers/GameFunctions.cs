@@ -53,6 +53,8 @@ public class GameFunctions : MonoBehaviour {
     private Text messageText;
     private Text ammoText;
 
+    public Texture enemyHit;
+
     public Terrain terr;
 
     //Various variables that are technically settings in game. Global so they are editable in unity. Most are pretty self explanatory. Call 4023679129 if you need help on figuring out what any of them mean
@@ -66,6 +68,8 @@ public class GameFunctions : MonoBehaviour {
     public float globalBulletSpeed = 50;
     public float globalRocketSpeed = 30;
     public float globalGrenadeSpeed = 10;
+    public float enemyGunRange = 10;
+    public float enemyBulletSpeed = 50;
 
 
     // Function that runs the first frame that this object, the GameFunctions, exisits, which should be the first frame of the entire game
@@ -202,12 +206,27 @@ public class GameFunctions : MonoBehaviour {
     {
         float diffZ = workingObject.transform.position.z - targetObject.transform.position.z;
         float diffX= workingObject.transform.position.x- targetObject.transform.position.x ;
-        yRotation = -RadiansToDegrees(Mathf.Atan(diffX/diffZ));
+        yRotation = 175+RadiansToDegrees(Mathf.Atan2(diffX,diffZ));
     }
 
     public void SetCameraAngle(GameObject workingObject, float xRotation)
     {
         workingObject.transform.eulerAngles = new Vector3(xRotation+35,workingObject.transform.eulerAngles.y,workingObject.transform.eulerAngles.z);
+    }
+
+
+    public void checkRange(GameObject workingObject, GameObject targetObject, ref float nextFire, float fireRate, float yRotation, float xRotation)
+    {
+        if (GetDistance(workingObject.transform.position, targetObject.transform.position)<enemyGunRange && Time.time>nextFire)
+        {
+            CreateBullet(bullet, workingObject,yRotation,xRotation,enemyBulletSpeed);
+            nextFire = Time.time + fireRate;
+        }
+    }
+
+    public float GetDistance(Vector3 workingObject, Vector3 targetObject)
+    {
+        return Mathf.Sqrt(Mathf.Pow(workingObject.x - targetObject.x, 2) + Mathf.Pow(workingObject.z - targetObject.z, 2));
     }
 
     //Function that takes in the current weapon the player has and checks to make sure its within the fire rate restrction
@@ -240,12 +259,10 @@ public class GameFunctions : MonoBehaviour {
         {
             nextFire = Time.time + handGunFireRate;
             CreateBullet(bullet, weaponHandSpot, yRotation, xRotation, globalBulletSpeed);
-            Instantiate(bulletSound, weaponHandSpot.transform.position, weaponHandSpot.transform.rotation);
         } else if (type==WeaponType.Rifle)
         {
             nextFire = Time.time + rifleFireRate;
             CreateBullet(bullet, weaponHandSpot, yRotation, xRotation, globalBulletSpeed);
-            Instantiate(bulletSound, weaponHandSpot.transform.position, weaponHandSpot.transform.rotation);
         }
         else if (type == WeaponType.Shotgun)
         {
@@ -266,13 +283,12 @@ public class GameFunctions : MonoBehaviour {
         CreateBullet(bullet, weaponHandSpot, yRotation, xRotation, globalBulletSpeed);
         CreateBullet(bulletLeft, weaponHandSpot, yRotation, xRotation, globalBulletSpeed);
         CreateBullet(bulletRight, weaponHandSpot, yRotation, xRotation, globalBulletSpeed);
-        Instantiate(bulletSound, weaponHandSpot.transform);
     }
 
     private void CreateBullet(GameObject bullet, GameObject weaponHandSpot, float yRotation, float xRotation, float bulletSpeed)
     {
         GameObject firedBullet = Instantiate(bullet, weaponHandSpot.transform.position, weaponHandSpot.transform.rotation);
-
+        Instantiate(bulletSound, weaponHandSpot.transform);
         FindBulletVelocity(firedBullet, bulletSpeed, yRotation, xRotation);
     }
 
@@ -435,7 +451,15 @@ public class GameFunctions : MonoBehaviour {
         {
             hitObject.GetComponent<PlayerController>().health -= damage;
             healthText.text = "Health: " + hitObject.GetComponent<PlayerController>().health;
+        }else if (hitObject.CompareTag("GunEnemy"))
+        {
+            hitObject.GetComponent<GunEnemyController>().health -= damage;
         }
+    }
+
+    public void changeMaterial(GameObject workingObject, Texture targetTexture)
+    {
+        workingObject.GetComponent<Renderer>().material.SetTexture("_MainTex", targetTexture);
     }
 
 
@@ -450,6 +474,7 @@ public class GameFunctions : MonoBehaviour {
     public void PlayerDead()
     {
         GameController.GetComponent<GameController>().EndGame = true;
+        Time.timeScale = 0;
     }
 
     //Functin that adds the jumpStrength of the object to the upward velocity of the object

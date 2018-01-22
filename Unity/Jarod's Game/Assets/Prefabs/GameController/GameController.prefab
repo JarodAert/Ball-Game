@@ -57,28 +57,41 @@ MonoBehaviour:
   ammoPickup: {fileID: 1415245054423300, guid: 052dc4a5a6c6abc41bb5811a0e01109e, type: 2}
   grenadePickup: {fileID: 1513086991447166, guid: 6396591f20b1adc4dbe75b56be89e632,
     type: 2}
-  grenadeSpawnChance: 15
-  spawnRate: 10
+  terr: {fileID: 0}
+  grenadeSpawnChance: 25
+  spawnRate: 20
+  xConstrant: 45
+  zConstrant: 45
 --- !u!114 &114490527021326056
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1802512572950180}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0c0882e5fb53ee45863ab7c561721d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 1434962466472916, guid: a5d294912309aff47bb1d5947779989e, type: 2}
+  enemy: {fileID: 1738989012430112, guid: a5d294912309aff47bb1d5947779989e, type: 2}
   bigEnemy: {fileID: 1889789348688330, guid: 43799ac912bd4f94aaf54ddd1a350d41, type: 2}
   fastEnemy: {fileID: 1141717108255420, guid: acf9cd2c7d1a1994a888ce37d034edde, type: 2}
-  spawnRate: 3
+  gunEnemy: {fileID: 1761175853094438, guid: 556f89b4aab0537469f850bccb4267f3, type: 2}
+  terr: {fileID: 0}
+  spawnRate: 2
   maxEnemies: 50
-  fastEnemyStart: 20
-  fastEnemyDouble: 50
-  bigEnemyStart: 40
-  bigEnemyDouble: 75
+  fastEnemyStart: 15
+  fastEnemyDouble: 40
+  bigEnemyStart: 30
+  bigEnemyDouble: 55
+  gunEnemyStart: 65
+  xConstrant: 45
+  zConstrant: 45
+  fastEnemyLowerChance: 25
+  fastEnemyHigherChance: 40
+  bigEnemyLowerChance: 25
+  bigEnemyHigherChance: 40
+  gunEnemyLowerChange: 10
 --- !u!114 &114530335041838894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -99,8 +112,12 @@ MonoBehaviour:
     type: 2}
   SwordDrop: {fileID: 1429284402715034, guid: f02f2fbe512a63c4c9f32c6307c64343, type: 2}
   AxeDrop: {fileID: 1885580963927136, guid: 85a574570346a774fa824831ee93a4f4, type: 2}
+  terr: {fileID: 0}
+  handGun: 1
   sword: 0
   axe: 0
+  xConstrant: 45
+  zConstrant: 45
 --- !u!114 &114595084066203412
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -114,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EndGame: 0
   player: {fileID: 0}
+  playerWeaponHand: {fileID: 0}
   GameFunctions: {fileID: 1847963997602896, guid: c1c529b7ed7baf0439da50385cf8a36b,
     type: 2}
   OakTree: {fileID: 191266, guid: c44bd9bdc114d4a60932c0087d9d1732, type: 2}
@@ -124,6 +142,8 @@ MonoBehaviour:
   terr: {fileID: 0}
   kills: 0
   activeEnemies: 0
-  NumberOfTrees: 10
+  NumberOfTrees: 2
   treeXConstrant: 35
   treeZConstrant: 35
+  xPlayerConstrant: 50
+  zPlayerConstrant: 50

@@ -28,23 +28,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1840745817097986
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4773035031242650}
-  - component: {fileID: 135652174363023896}
-  - component: {fileID: 114561642835439484}
-  m_Layer: 0
-  m_Name: RangeCollider
-  m_TagString: RangeCollider
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1889789348688330
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,6 +40,7 @@ GameObject:
   - component: {fileID: 135300586669434144}
   - component: {fileID: 23794171592854446}
   - component: {fileID: 54378207956165006}
+  - component: {fileID: 114757534331340236}
   m_Layer: 0
   m_Name: BigEnemy
   m_TagString: EnemyMain
@@ -74,7 +58,6 @@ Transform:
   m_LocalPosition: {x: 2.65, y: 1, z: 2.97}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
-  - {fileID: 4773035031242650}
   - {fileID: 4635208023467026}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -85,19 +68,6 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1551234085295648}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4591760498650634}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4773035031242650
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1840745817097986}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -161,18 +131,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114561642835439484
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1840745817097986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a1fe1cbad4274b46af195d9245a3da6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemySpeed: 8
 --- !u!114 &114655613253723372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -185,8 +143,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 100010, guid: 031d08f52af1daa4f929b85221519426, type: 2}
-  health: 200
+  hitTexture: {fileID: 2800000, guid: ecae6b575c1924b47ab45f6079c7ab86, type: 3}
+  normalTexture: {fileID: 2800000, guid: 47fd66a342193c649a5e5dfcaba1fd8c, type: 3}
+  health: 150
   attackStrength: 3
+  hit: 0
+  changeTextureBack: 0
+--- !u!114 &114757534331340236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1889789348688330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a1fe1cbad4274b46af195d9245a3da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpeed: 12
+  chaseRange: 75
 --- !u!135 &135300586669434144
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -198,18 +173,6 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &135652174363023896
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1840745817097986}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135824885710711814
 SphereCollider:

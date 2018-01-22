@@ -52,7 +52,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 29ecf0104c463ad47801fff93c5b23b6, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -134,14 +134,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameController: {fileID: 1802512572950180, guid: 0891c52e3912abd48a502f15dd25583f,
     type: 2}
-  player: {fileID: 1225209320571268, guid: e91c9af91a3e14b4cb24768482cdc852, type: 2}
+  player: {fileID: 0}
+  playerCamera: {fileID: 0}
+  playerLight: {fileID: 0}
   bullet: {fileID: 1415236848195072, guid: d794d17319b2f1c489381c848fdc8e07, type: 2}
   bulletLeft: {fileID: 1562618072918326, guid: 65c6e9c296572a740b554a62a56d7a7c, type: 2}
   bulletRight: {fileID: 1672283184723054, guid: b6c5c54e831ae6d49bedf5f74c5a7572,
     type: 2}
   rocket: {fileID: 1870117735447440, guid: b8163be430401944786490a69bbe8f4e, type: 2}
-  weaponHandSpot: {fileID: 1979284050060962, guid: 07495dbebd6571348b54408db5e37f1e,
-    type: 2}
+  weaponHandSpot: {fileID: 0}
   HandGunDrop: {fileID: 1149832511338434, guid: 97576b9a33955204faceba3dd3397cc9,
     type: 2}
   RifleDrop: {fileID: 1515343676894646, guid: a2cb2ead2abaa3d408dd15e9cfa9a75f, type: 2}
@@ -162,10 +163,14 @@ MonoBehaviour:
   explosion: {fileID: 100010, guid: 031d08f52af1daa4f929b85221519426, type: 2}
   bulletSound: {fileID: 1928118408006298, guid: 0cd8559d48626e9438132ac80b15da00,
     type: 2}
-  yRotation: 90
-  xRotation: 0
+  terr: {fileID: 0}
   xRotationBullet: 0
   handGunFireRate: 0.2
   rifleFireRate: 0.1
   shotgunFireRate: 0.8
   rocketLauncherFireRate: 2
+  globalBulletSpeed: 50
+  globalRocketSpeed: 30
+  globalGrenadeSpeed: 7
+  enemyGunRange: 15
+  enemyBulletSpeed: 45

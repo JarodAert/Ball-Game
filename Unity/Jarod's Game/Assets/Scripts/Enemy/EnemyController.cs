@@ -9,12 +9,17 @@ public class EnemyController : MonoBehaviour {
     private GameObject GameController;
     public GameObject explosion;
     private Text killsText;
+    public Texture hitTexture;
+    public Texture normalTexture;
 
     public float health = 100;
 
     private float nextAttack=0;
     private float attackSpeed = 1;
     public float attackStrength = 2;
+
+    public bool hit = false;
+    public float changeTextureBack = 10000;
 
     // At dtart of enemy's existance finds the Game functions object and the healthText UI object
     void Start () {
@@ -33,7 +38,18 @@ public class EnemyController : MonoBehaviour {
                 GameController.GetComponent<GameController>().activeEnemies--;
                 killsText.text = "Kills: "+ GameController.GetComponent<GameController>().kills;
             }
-        
+
+        if (hit == true)
+        {
+            GameFunctions.GetComponent<GameFunctions>().changeMaterial(this.transform.parent.gameObject, hitTexture);
+            changeTextureBack = Time.time + 0.2f;
+            hit = false;
+        }
+        if (Time.time > changeTextureBack)
+        {
+            GameFunctions.GetComponent<GameFunctions>().changeMaterial(this.transform.parent.gameObject, normalTexture);
+            changeTextureBack = Time.time + 10000;
+        }
 	}
 
     //Each frame that the enemy is in contact with the player the enemy attacks the player and damages him.

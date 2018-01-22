@@ -28,14 +28,27 @@ public class BulletMovement : MonoBehaviour {
     //TODO: Right now bullets only damage enemies. it needs to be universal so that bullets can harm any 'living' objects
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+
+        if (other.gameObject.CompareTag("PlayerTrigger"))
         {
-            if (other.GetComponent<EnemyController>().health > 0)
+                GameFunctions.GetComponent<GameFunctions>().DamageObject(other.transform.parent.gameObject, bulletStrength);
+                Destroy(this.gameObject);
+        }
+
+        if(other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("GunEnemy")){
+            GameFunctions.GetComponent<GameFunctions>().DamageObject(other.gameObject, bulletStrength);
+            if (other.CompareTag("Enemy"))
             {
-                GameFunctions.GetComponent<GameFunctions>().DamageObject(other.gameObject, bulletStrength);
+                other.GetComponent<EnemyController>().hit = true;
+            }
+            else if (other.CompareTag("GunEnemy"))
+            {
+                other.GetComponent<GunEnemyController>().hit = true;
             }
             Destroy(this.gameObject);
-        }else if (other.gameObject.CompareTag("Terrian"))
+        }
+
+        if (other.gameObject.CompareTag("Terrian"))
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
         }

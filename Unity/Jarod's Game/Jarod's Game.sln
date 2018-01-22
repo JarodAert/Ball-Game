@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarod's Game", "Assembly-CS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarod's Game", "Assembly-CSharp-firstpass.csproj", "{8FC7C48C-B75E-32B0-E571-E01EF01CB279}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarod's Game", "Assembly-CSharp-Editor.csproj", "{9725FBFC-452D-1CB3-F39B-7E7990747304}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarod's Game", "Assembly-CSharp-Editor-firstpass.csproj", "{FFD7C9E9-9C5D-BBDE-D75A-AA2E738152B1}"
 EndProject
 Global
@@ -21,6 +23,10 @@ Global
 		{8FC7C48C-B75E-32B0-E571-E01EF01CB279}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FC7C48C-B75E-32B0-E571-E01EF01CB279}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FC7C48C-B75E-32B0-E571-E01EF01CB279}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9725FBFC-452D-1CB3-F39B-7E7990747304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9725FBFC-452D-1CB3-F39B-7E7990747304}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9725FBFC-452D-1CB3-F39B-7E7990747304}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9725FBFC-452D-1CB3-F39B-7E7990747304}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFD7C9E9-9C5D-BBDE-D75A-AA2E738152B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FFD7C9E9-9C5D-BBDE-D75A-AA2E738152B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFD7C9E9-9C5D-BBDE-D75A-AA2E738152B1}.Release|Any CPU.ActiveCfg = Release|Any CPU

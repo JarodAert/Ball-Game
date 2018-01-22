@@ -22,7 +22,7 @@ public class AmmoPickupController : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {          
                 other.GetComponent<PlayerController>().totalAmmo += 4*(float)other.GetComponent<PlayerController>().currentWeapon;
                 GameFunctions.GetComponent<GameFunctions>().UpdateAmmoText();

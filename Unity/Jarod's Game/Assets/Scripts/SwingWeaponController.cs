@@ -39,7 +39,6 @@ public class SwingWeaponController : MonoBehaviour {
     {
         if (other.CompareTag("Enemy") && swing==true)
         {
-            Debug.Log("Damage");
             GameFunctions.GetComponent<GameFunctions>().DamageObject(other.gameObject, swingStrength);
         }
     }

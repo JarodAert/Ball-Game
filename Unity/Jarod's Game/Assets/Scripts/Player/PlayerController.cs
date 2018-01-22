@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour {
         {
             healthText.text = "Health: 0";
             GameFunctions.GetComponent<GameFunctions>().DestroyBall(this.gameObject, explosion);
+            GameFunctions.GetComponent<GameFunctions>().DestroyBall(GameFunctions.GetComponent<GameFunctions>().weaponHandSpot, explosion);
             GameFunctions.GetComponent<GameFunctions>().PlayerDead();
         }
     }
@@ -113,20 +114,21 @@ public class PlayerController : MonoBehaviour {
 
     private void Reload()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && (int)loadedAmmo<(int)currentWeapon && totalAmmo!=0)
         {
             nextFire = Time.time + 1.5f;
             GetComponent<AudioSource>().Play();
-            if (totalAmmo < (float)currentWeapon)
-            {
-                loadedAmmo = totalAmmo;
-                totalAmmo = 0;
-            }
-            else
-            {
-                totalAmmo -= ((float)currentWeapon - loadedAmmo);
-                loadedAmmo = (float)currentWeapon;
-            }
+
+                if (totalAmmo < (float)currentWeapon)
+                {
+                    loadedAmmo = totalAmmo;
+                    totalAmmo = 0;
+                }
+                else
+                {
+                    totalAmmo -= ((float)currentWeapon - loadedAmmo);
+                    loadedAmmo = (float)currentWeapon;
+                }
             GameFunctions.GetComponent<GameFunctions>().UpdateAmmoText();
             messageText.text = "";
         }

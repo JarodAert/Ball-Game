@@ -22,7 +22,7 @@ public class GrenadePickupController : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             other.GetComponent<PlayerController>().totalGrenades++;
             GameFunctions.GetComponent<GameFunctions>().UpdateAmmoText();

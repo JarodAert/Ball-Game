@@ -5,28 +5,43 @@ using UnityEngine;
 public class EnemyChaseController : MonoBehaviour {
 
     private GameObject GameFunctions;
+    private GameObject GameController;
 
     public float enemySpeed = 5;
+    public float chaseRange = 75;
+    private bool chase = false;
     
 
 
 	// Find the Game Functions object when existance begins
 	void Start () {
         GameFunctions = GameObject.FindGameObjectWithTag("GameFunctions");
+        GameController = GameObject.FindGameObjectWithTag("GameController");
     }
 	
 	// Update is called once per frame, not used yet
 	void Update () {
-		
+        if (GameController.GetComponent<GameController>().EndGame == false)
+        {
+            if (Vector3.Distance(GameFunctions.GetComponent<GameFunctions>().player.transform.position, transform.position) <= chaseRange)
+            {
+                chase = true;
+            }
+            else
+            {
+                chase = false;
+            }
+        }
 	}
 
-    //Each fram that the player is with the chasing range of the enemy it moves to chase the player
-    void OnTriggerStay(Collider other)
+    void FixedUpdate()
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (chase)
         {
-            Vector3 movement = GameFunctions.GetComponent<GameFunctions>().FindChaseForce(other.transform,transform,enemySpeed);
+            Vector3 movement = GameFunctions.GetComponent<GameFunctions>().FindChaseForce(GameFunctions.GetComponent<GameFunctions>().player.transform, transform, enemySpeed);
             GetComponentInParent<Rigidbody>().AddForce(movement);
         }
     }
+
+
 }
